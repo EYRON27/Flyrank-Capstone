@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SyncStudy AI Next.js Capstone Skeleton 🚀
 
-## Getting Started
+This repository contains the Next.js App Router Capstone project skeleton (`flyrank-capstone`) built with TypeScript, Tailwind CSS (v4), and Lucide Icons.
 
-First, run the development server:
+It has been structured following professional routing standards and utilizes React Server Components by default.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack & Layout Details
+- **Framework**: Next.js 15+ (App Router)
+- **Styling**: Tailwind CSS (v4) with custom Glassmorphism variables
+- **Icons**: Lucide React
+- **Language**: TypeScript (Type-safe compilation enabled)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📂 Project Routing Structure
+All internal pages share a responsive sidebar layout:
+- `/` - **Landing Page**: Public hero section introducing SyncStudy AI's features.
+- `/dashboard` - **Workspace Dashboard**: Active rooms summary, focus stats, and updates.
+- `/tasks` - **Tasks Board**: Project items and an interactive Pomodoro Focus Timer.
+- `/study-rooms` - **Study Rooms**: Directory of active voice/chat rooms.
+- `/notes` - **Notes Viewport**: Markdown notes browser and reader.
+- `/settings` - **Workspace Settings**: Input fields to customize profile data.
+- `/health-check` - **API Health Check**: A dynamic server-rendered page that fetches user diagnostic data from a live mockup gateway on every request.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 How to Setup and Run Locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+3. **Verify Build Output**:
+   ```bash
+   npm run build
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ☁️ How to Deploy on Vercel
+
+1. **Initialize Git & Push to GitHub**:
+   - Create a brand new repository on your GitHub account called `flyrank-capstone`.
+   - Run the following in your `flyrank-capstone` folder terminal:
+     ```bash
+     git add .
+     git commit -m "feat: scaffold next.js capstone skeleton with routes and health-check"
+     git branch -M main
+     git remote add origin https://github.com/YOUR_USERNAME/flyrank-capstone.git
+     git push -u origin main
+     ```
+
+2. **Connect to Vercel**:
+   - Go to [Vercel](https://vercel.com/new).
+   - Import your newly pushed `flyrank-capstone` repository.
+   - Click **Deploy**! Vercel will automatically parse the Next.js setup and give you a live production link.
+   - Any new code pushed to the `main` branch will automatically trigger a Vercel preview deployment.
