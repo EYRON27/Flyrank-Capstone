@@ -1,7 +1,7 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Send, Square, ArrowDown, Sparkles, User } from "lucide-react";
 
 export default function ChatContainer() {
@@ -11,9 +11,7 @@ export default function ChatContainer() {
     sendMessage,
     stop,
     status,
-  } = useChat({
-    api: "/api/chat",
-  });
+  } = useChat();
 
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -66,13 +64,25 @@ export default function ChatContainer() {
     setInput(e.target.value);
   };
 
+  // Helper to extract and join text parts from v4 UIMessage
+  const getMessageText = (message: typeof messages[0]): string => {
+    if (!message.parts) return "";
+    return message.parts
+      .map((part) => (part.type === "text" ? part.text : ""))
+      .join("");
+  };
+
   // Determine if assistant is "thinking" (sent prompt but no tokens generated yet)
+  const lastMessage = messages[messages.length - 1];
+  const hasContent = lastMessage?.parts?.some(
+    (part) => part.type === "text" && part.text.trim().length > 0
+  );
+
   const isThinking =
     isLoading &&
     messages.length > 0 &&
-    (messages[messages.length - 1].role === "user" ||
-      (messages[messages.length - 1].role === "assistant" &&
-        !messages[messages.length - 1].content));
+    (lastMessage.role === "user" ||
+      (lastMessage.role === "assistant" && !hasContent));
 
   return (
     <div className="flex flex-col h-[600px] w-full glass-panel rounded-2xl overflow-hidden relative border border-border-color">
@@ -118,6 +128,11 @@ export default function ChatContainer() {
         ) : (
           messages.map((message) => {
             const isUser = message.role === "user";
+            const text = getMessageText(message);
+            
+            // Skip rendering empty assistant bubbles (e.g. during initial loading/thinking)
+            if (!isUser && !text.trim() && !isThinking) return null;
+
             return (
               <div
                 key={message.id}
@@ -144,7 +159,7 @@ export default function ChatContainer() {
                       : "bg-card-bg/60 border border-border-color text-gray-300 rounded-tl-none whitespace-pre-wrap"
                   }`}
                 >
-                  {message.content}
+                  {text}
                 </div>
               </div>
             );
