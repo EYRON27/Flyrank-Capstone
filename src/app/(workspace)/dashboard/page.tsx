@@ -1,5 +1,6 @@
 import React from "react";
-import { LayoutDashboard, Users, BookOpen, Clock, AlertCircle } from "lucide-react";
+import { Clock, Users, BookOpen, AlertCircle } from "lucide-react";
+import ChatContainer from "@/components/chat/ChatContainer";
 
 export default function Dashboard() {
   const stats = [
@@ -47,44 +48,51 @@ export default function Dashboard() {
         })}
       </div>
 
-      {/* Placeholder Details */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 glass-panel p-6 rounded-2xl">
-          <h3 className="font-bold text-lg text-white mb-4">Workspace Activities</h3>
-          <div className="flex flex-col gap-4">
-            <div className="p-4 rounded-xl bg-background/50 border border-border-color flex items-center gap-4">
-              <div className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
-              <div className="flex-1">
-                <div className="text-sm font-bold text-white">Algorithms Study Group Session</div>
-                <div className="text-xs text-gray-500">Group Room #4 • Started 15 minutes ago</div>
+      {/* Workspace Activity & Streaming Chat UI Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        {/* Workspace Activities List */}
+        <div className="lg:col-span-1 flex flex-col gap-6">
+          <div className="glass-panel p-6 rounded-2xl">
+            <h3 className="font-bold text-lg text-white mb-4">Workspace Activities</h3>
+            <div className="flex flex-col gap-4">
+              <div className="p-4 rounded-xl bg-background/50 border border-border-color flex flex-col gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <div className="text-xs font-bold text-white">Algorithms Group Session</div>
+                </div>
+                <p className="text-[11px] text-gray-500">Group Room #4 • Active co-study room with 5 peers.</p>
+                <button className="w-full py-2 rounded-xl bg-accent-light text-accent border border-accent/20 text-xs font-bold hover:bg-accent hover:text-white transition duration-200">
+                  Join Room
+                </button>
               </div>
-              <button className="px-4 py-2 rounded-xl bg-accent-light text-accent border border-accent/30 text-xs font-bold hover:bg-accent hover:text-white transition duration-200">
-                Join Room
-              </button>
-            </div>
 
-            <div className="p-4 rounded-xl bg-background/50 border border-border-color flex items-center gap-4">
-              <div className="w-2.5 h-2.5 rounded-full bg-gray-600" />
-              <div className="flex-1">
-                <div className="text-sm font-bold text-white">Completed Task: System Architecture Review</div>
-                <div className="text-xs text-gray-500">Marked complete by Aaron • 2 hours ago</div>
+              <div className="p-4 rounded-xl bg-background/50 border border-border-color flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-gray-600" />
+                  <div className="text-xs font-bold text-gray-400">Task: System Architecture Review</div>
+                </div>
+                <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Completed 2 hours ago</span>
               </div>
-              <span className="text-xs text-gray-500 font-bold uppercase tracking-wider">Closed</span>
+            </div>
+          </div>
+
+          <div className="glass-panel p-6 rounded-2xl flex flex-col gap-4">
+            <h3 className="font-bold text-base text-white">AI Assistant Info</h3>
+            <div className="p-4 rounded-xl bg-accent-light border border-accent/10 flex gap-3">
+              <AlertCircle size={20} className="text-accent flex-shrink-0 mt-0.5" />
+              <div>
+                <h4 className="text-[10px] font-bold text-accent uppercase tracking-widest mb-1">Streaming Mode</h4>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  Our system calls Claude 3.5 Sonnet using Next.js route streaming. Responses visibly render token-by-token.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl flex flex-col gap-4">
-          <h3 className="font-bold text-lg text-white">AI Quick Guide</h3>
-          <div className="p-4 rounded-xl bg-accent-light border border-accent/20 flex gap-3">
-            <AlertCircle size={20} className="text-accent flex-shrink-0 mt-0.5" />
-            <div>
-              <h4 className="text-xs font-bold text-accent uppercase tracking-widest mb-1">Interactive Feature</h4>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Click any tab in the sidebar navigation to toggle routes. Each view includes responsive layouts and Tailwind styling variables.
-              </p>
-            </div>
-          </div>
+        {/* Central Chat Interaction Widget */}
+        <div className="lg:col-span-2">
+          <ChatContainer />
         </div>
       </div>
     </div>
