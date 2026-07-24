@@ -1,25 +1,27 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { useEffect, useRef, useState } from "react";
-import { Send, Square, ArrowDown, Sparkles, User, RefreshCw } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { Send, Square, ArrowDown, Sparkles, User } from "lucide-react";
 
 export default function ChatContainer() {
+  // Destructure headless hooks from @ai-sdk/react v4
   const {
     messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
+    sendMessage,
     stop,
-    reload,
+    status,
   } = useChat({
     api: "/api/chat",
   });
 
+  const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPinnedRef = useRef(true);
   const [showJumpToBottom, setShowJumpToBottom] = useState(false);
+
+  // Derived loading state from status
+  const isLoading = status === "streaming" || status === "submitted";
 
   // Monitor scroll updates to toggle scroll pinning
   const handleScroll = () => {
@@ -50,6 +52,18 @@ export default function ChatContainer() {
       isPinnedRef.current = true;
       setShowJumpToBottom(false);
     }
+  };
+
+  // Form submission handler
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    sendMessage({ text: input });
+    setInput("");
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
   };
 
   // Determine if assistant is "thinking" (sent prompt but no tokens generated yet)
